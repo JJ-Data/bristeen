@@ -1,0 +1,46 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { LayoutDashboard, ShoppingCart, CalendarDays, FileText, Settings } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export function MobileNav() {
+    const pathname = usePathname();
+
+    if (pathname === "/login") return null;
+
+    const links = [
+        { href: "/", label: "Home", icon: LayoutDashboard },
+        { href: "/orders", label: "Orders", icon: ShoppingCart },
+        { href: "/events", label: "Events", icon: CalendarDays },
+        { href: "/invoices", label: "Invoices", icon: FileText },
+        { href: "/settings", label: "Settings", icon: Settings },
+    ];
+
+    return (
+        <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-card/95 backdrop-blur-md md:hidden shadow-[0_-5px_10px_rgba(0,0,0,0.05)]">
+            <nav className="flex items-center justify-around h-16 px-2">
+                {links.map((link) => {
+                    const Icon = link.icon;
+                    const isActive = pathname === link.href;
+                    return (
+                        <Link
+                            key={link.href}
+                            href={link.href}
+                            className={cn(
+                                "flex flex-col items-center justify-center w-full h-full space-y-1",
+                                isActive
+                                    ? "text-primary"
+                                    : "text-muted-foreground hover:text-foreground"
+                            )}
+                        >
+                            <Icon className={cn("h-5 w-5", isActive && "fill-current")} />
+                            <span className="text-[10px] font-medium">{link.label}</span>
+                        </Link>
+                    );
+                })}
+            </nav>
+        </div>
+    );
+}

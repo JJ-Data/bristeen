@@ -1,0 +1,121 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  phone     String?
+  role      String   @default("CUSTOMER") // Using String as SQLite doesn't natively support enums, though schema enum is Prisma level. Better safe.
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  bookings Booking[]
+  orders   Order[]
+  invoices Invoice[]
+}
+
+model MenuItem {
+  id           String    @id @default(cuid())
+  name         String
+  description  String?
+  price        Float
+  imageUrl     String?
+  isAvailable  Boolean   @default(true)
+  orderDueDate DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  orderItems OrderItem[]
+}
+
+model Booking {
+  id          String   @id @default(cuid())
+  eventDate   DateTime
+  eventType   String
+  guestCount  Int
+  notes       String?
+  adminNotes  String?
+  status      String   @default("PENDING")
+  totalAmount Float?
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  invoice   Invoice?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id          String @id @default(cuid())
+  userId      String
+  user        User   @relation(fields: [userId], references: [id])
+  status      String @default("PENDING")
+  totalAmount Float
+
+  items     OrderItem[]
+  invoice   Invoice?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model OrderItem {
+  id         String   @id @default(cuid())
+  orderId    String
+  order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  menuItemId String
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id])
+  quantity   Int
+  unitPrice  Float
+}
+
+model Invoice {
+  id      String   @id @default(cuid())
+  amount  Float
+  status  String   @default("UNPAID")
+  dueDate DateTime
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  bookingId String?  @unique
+  booking   Booking? @relation(fields: [bookingId], references: [id])
+  orderId   String?  @unique
+  order     Order?   @relation(fields: [orderId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model InventoryItem {
+  id          String  @id @default(cuid())
+  name        String
+  description String?
+  category    String
+  quantity    Int     @default(0)
+  unit        String
+  minStock    Int     @default(10)
+
+  logs      InventoryLog[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+model InventoryLog {
+  id              String        @id @default(cuid())
+  inventoryItemId String
+  inventoryItem   InventoryItem @relation(fields: [inventoryItemId], references: [id])
+
+  action          String
+  quantityChanged Int
+  newQuantity     Int
+  notes           String?
+  createdAt       DateTime @default(now())
+}

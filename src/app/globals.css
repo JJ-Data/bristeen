@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Light Mode Defaults */
+    --color-background: hsl(40 30% 97%);
+    --color-foreground: hsl(25 15% 12%);
+
+    --color-card: hsl(0 0% 100%);
+    --color-card-foreground: hsl(25 15% 12%);
+
+    --color-popover: hsl(0 0% 100%);
+    --color-popover-foreground: hsl(25 15% 12%);
+
+    /* Primary Brand Color: Bristeen Amber */
+    --color-primary: hsl(33 83% 52%);
+    --color-primary-foreground: hsl(0 0% 100%);
+
+    --color-secondary: hsl(40 25% 94%);
+    --color-secondary-foreground: hsl(25 15% 12%);
+
+    --color-muted: hsl(40 20% 93%);
+    --color-muted-foreground: hsl(30 10% 48%);
+
+    --color-accent: hsl(40 25% 94%);
+    --color-accent-foreground: hsl(25 15% 12%);
+
+    --color-destructive: hsl(0 84.2% 60.2%);
+    --color-destructive-foreground: hsl(210 40% 98%);
+
+    --color-border: hsl(35 20% 84%);
+    --color-input: hsl(35 20% 84%);
+    --color-ring: hsl(33 83% 52%);
+
+    /* Chart Colors - Light Mode */
+    --color-chart-stroke: hsl(33 83% 52%);
+    --color-chart-gradient-start: hsl(33 83% 52%);
+    --color-chart-gradient-end: hsl(33 83% 52%);
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Rich Warm Charcoal Backgrounds (instead of pure black) */
+    --color-background: hsl(20 15% 3%);
+    --color-foreground: hsl(40 10% 98%);
+
+    --color-card: hsl(20 15% 6%);
+    --color-card-foreground: hsl(40 10% 98%);
+
+    --color-popover: hsl(20 15% 6%);
+    --color-popover-foreground: hsl(40 10% 98%);
+
+    /* Primary Brand Color: Bristeen Amber - More vibrant and glowing */
+    --color-primary: hsl(33 95% 60%);
+    --color-primary-foreground: hsl(20 20% 4%);
+
+    --color-secondary: hsl(20 10% 10%);
+    --color-secondary-foreground: hsl(40 10% 90%);
+
+    --color-muted: hsl(20 10% 12%);
+    --color-muted-foreground: hsl(30 15% 60%);
+
+    --color-accent: hsl(33 90% 55%);
+    --color-accent-foreground: hsl(20 20% 4%);
+
+    --color-destructive: hsl(0 80% 55%);
+    --color-destructive-foreground: hsl(0 0% 100%);
+
+    --color-border: hsl(20 10% 14%);
+    --color-input: hsl(20 10% 10%);
+    --color-ring: hsl(33 95% 60%);
+
+    /* Chart Colors - Enhanced Contrast */
+    --color-chart-stroke: hsl(33 95% 60%);
+    --color-chart-gradient-start: hsl(33 95% 60%);
+    --color-chart-gradient-end: hsl(33 95% 60% / 0.2);
+  }
+}
+
+@theme {
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-heading: var(--font-outfit), system-ui, sans-serif;
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+    border-style: solid;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-primary), transparent 80%);
+    color: var(--color-foreground);
+  }
+}
