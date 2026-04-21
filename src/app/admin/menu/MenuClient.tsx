@@ -24,18 +24,42 @@ export default function MenuClient({ items }: { items: MenuItem[] }) {
 
   // Handlers
   async function handleAddSubmit(e: React.FormEvent<HTMLFormElement>) {
-     e.preventDefault();
-     const form = new FormData(e.currentTarget);
-     await addMenuItem(form);
-     setIsAddModalOpen(false);
+      e.preventDefault();
+      const form = new FormData(e.currentTarget);
+      
+      const imageFile = (e.currentTarget.elements.namedItem("imageFile") as HTMLInputElement)?.files?.[0];
+      if (imageFile) {
+         const uploadForm = new FormData();
+         uploadForm.append("file", imageFile);
+         const res = await fetch("/api/upload", { method: "POST", body: uploadForm });
+         if (res.ok) {
+            const data = await res.json();
+            form.set("imageUrl", data.url);
+         }
+      }
+
+      await addMenuItem(form);
+      setIsAddModalOpen(false);
   }
 
   async function handleEditSubmit(e: React.FormEvent<HTMLFormElement>) {
-     e.preventDefault();
-     if (!editingItem) return;
-     const form = new FormData(e.currentTarget);
-     await updateMenuItem(editingItem.id, form);
-     setEditingItem(null);
+      e.preventDefault();
+      if (!editingItem) return;
+      const form = new FormData(e.currentTarget);
+
+      const imageFile = (e.currentTarget.elements.namedItem("imageFile") as HTMLInputElement)?.files?.[0];
+      if (imageFile) {
+         const uploadForm = new FormData();
+         uploadForm.append("file", imageFile);
+         const res = await fetch("/api/upload", { method: "POST", body: uploadForm });
+         if (res.ok) {
+            const data = await res.json();
+            form.set("imageUrl", data.url);
+         }
+      }
+
+      await updateMenuItem(editingItem.id, form);
+      setEditingItem(null);
   }
 
   async function handleDelete(id: string) {
@@ -167,9 +191,15 @@ export default function MenuClient({ items }: { items: MenuItem[] }) {
                         <label className="text-sm font-medium text-neutral-400 block mb-1">Description</label>
                         <textarea name="description" rows={3} className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-rose-500" placeholder="Delicious spicy rice paired with grilled chicken..."></textarea>
                      </div>
-                     <div>
-                        <label className="text-sm font-medium text-neutral-400 block mb-1">Image URL (Optional)</label>
-                        <input type="url" name="imageUrl" className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-rose-500" placeholder="https://example.com/image.jpg" />
+                     <div className="grid grid-cols-2 gap-4">
+                        <div>
+                           <label className="text-sm font-medium text-neutral-400 block mb-1">Image URL</label>
+                           <input type="url" name="imageUrl" className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-rose-500 text-xs" placeholder="https://..." />
+                        </div>
+                        <div>
+                           <label className="text-sm font-medium text-neutral-400 block mb-1">Or Upload</label>
+                           <input type="file" name="imageFile" accept="image/*" className="w-full bg-black/30 border border-white/10 rounded-xl px-2 py-2.5 text-white focus:outline-none focus:border-rose-500 text-xs file:mr-2 file:py-1 file:px-2 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-rose-600 file:text-white hover:file:bg-rose-500 cursor-pointer" />
+                        </div>
                      </div>
                      <div>
                         <label className="text-sm font-medium text-neutral-400 block mb-1">Price (₦)</label>
@@ -211,10 +241,16 @@ export default function MenuClient({ items }: { items: MenuItem[] }) {
                          <label className="text-sm font-medium text-neutral-400 block mb-1">Description</label>
                          <textarea name="description" defaultValue={editingItem.description || ""} rows={3} className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-rose-500" placeholder="Delicious spicy rice paired with grilled chicken..."></textarea>
                       </div>
-                      <div>
-                         <label className="text-sm font-medium text-neutral-400 block mb-1">Image URL (Optional)</label>
-                         <input type="url" name="imageUrl" defaultValue={editingItem.imageUrl || ""} className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-rose-500" placeholder="https://example.com/image.jpg" />
-                      </div>
+                       <div className="grid grid-cols-2 gap-4">
+                          <div>
+                             <label className="text-sm font-medium text-neutral-400 block mb-1">Image URL</label>
+                             <input type="url" name="imageUrl" defaultValue={editingItem.imageUrl || ""} className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-rose-500 text-xs" placeholder="https://..." />
+                          </div>
+                          <div>
+                             <label className="text-sm font-medium text-neutral-400 block mb-1">Replace Image</label>
+                             <input type="file" name="imageFile" accept="image/*" className="w-full bg-black/30 border border-white/10 rounded-xl px-2 py-2.5 text-white focus:outline-none focus:border-rose-500 text-xs file:mr-2 file:py-1 file:px-2 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-500 cursor-pointer" />
+                          </div>
+                       </div>
                       <div>
                          <label className="text-sm font-medium text-neutral-400 block mb-1">Price (₦)</label>
                          <input type="number" name="price" defaultValue={editingItem.price} required min="0" className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-rose-500" placeholder="5000" />

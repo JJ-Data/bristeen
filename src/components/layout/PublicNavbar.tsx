@@ -4,10 +4,12 @@ import { ChefHat } from "lucide-react";
 export default function PublicNavbar() {
   return (
     <nav className="fixed top-0 inset-x-0 h-20 items-center justify-between flex px-6 md:px-12 backdrop-blur-xl border-b border-white/5 z-50 bg-background/70">
-      <Link href="/" className="font-bold text-2xl tracking-tighter flex items-center gap-2">
-        <div className="size-8 rounded-full bg-rose-600 flex items-center justify-center">
-            <ChefHat className="text-white size-4" />
-        </div>
+      <Link href="/" className="font-bold text-2xl tracking-tighter flex items-center gap-3">
+        <img 
+          src="/bristeen-logo.png" 
+          alt="Bristeen Logo" 
+          className="size-10 object-contain hover:scale-105 transition-transform" 
+        />
         Bristeen 
       </Link>
       <div className="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-300">

@@ -33,10 +33,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Sidebar */}
       <aside className="w-72 bg-card border-r border-white/5 flex flex-col hidden lg:flex">
         <div className="h-20 flex items-center px-8 border-b border-white/5">
-          <Link href="/" className="font-bold text-2xl tracking-tighter flex items-center gap-2">
-            <div className="size-8 rounded-lg bg-rose-600 flex items-center justify-center">
-               <ChefHat className="text-white size-4" />
-            </div>
+          <Link href="/" className="font-bold text-2xl tracking-tighter flex items-center gap-3">
+            <img 
+              src="/bristeen-logo.png" 
+              alt="Bristeen Logo" 
+              className="size-9 object-contain" 
+            />
             Bristeen <span className="text-rose-500">Admin</span>
           </Link>
         </div>
