@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import MenuUI from "./MenuUI";
 
+export const dynamic = 'force-dynamic';
+
 export default async function PublicMenuPage() {
   // Only fetch food items that the Admin has marked as Available! 
   // We also make sure the due date hasn't passed if one exists.
