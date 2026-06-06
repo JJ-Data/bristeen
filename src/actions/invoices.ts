@@ -14,6 +14,29 @@ export async function getInvoices() {
   });
 }
 
+export async function generateInvoiceForBooking(bookingId: string) {
+  const booking = await prisma.booking.findUnique({
+    where: { id: bookingId },
+    include: { user: true },
+  });
+  if (!booking) throw new Error("Booking not found");
+
+  const existing = await prisma.invoice.findFirst({ where: { bookingId } });
+  if (existing) return;
+
+  await prisma.invoice.create({
+    data: {
+      amount: booking.totalAmount ?? 0,
+      dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days
+      userId: booking.userId,
+      bookingId: booking.id,
+    },
+  });
+
+  revalidatePath("/admin/bookings");
+  revalidatePath("/admin/invoices");
+}
+
 export async function generateInvoiceForOrder(orderId: string) {
   const order = await prisma.order.findUnique({ where: { id: orderId } });
   if (!order) throw new Error("Order not found");

@@ -46,7 +46,7 @@ export default function EventsPage() {
                
                {/* Impactful Brand Side */}
                <div className="flex-1 lg:py-20 z-10">
-                  <motion.div 
+                  <motion.div
                      initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}
                   >
                      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-rose-300 mb-8">
@@ -55,11 +55,11 @@ export default function EventsPage() {
                      <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6">
                         An <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-500">Unforgettable</span><br/> Experience.
                      </h1>
-                     <p className="text-lg text-neutral-400 max-w-xl mb-12 leading-relaxed">
-                        Whether it's an intimate wedding reception, a corporate gala, or an extravagant birthday, Bristeen's premium catering guarantees phenomenal service, bespoke dishes, and flawless delivery. Let's make magic happen.
+                     <p className="text-lg text-neutral-400 max-w-xl mb-10 leading-relaxed">
+                        Whether it&apos;s an intimate wedding reception, a corporate gala, or an extravagant birthday, Bristeen&apos;s premium catering guarantees phenomenal service, bespoke dishes, and flawless delivery.
                      </p>
 
-                     <div className="flex flex-col gap-6">
+                     <div className="flex flex-col gap-6 mb-10">
                         <div className="flex items-center gap-4">
                            <div className="size-12 rounded-2xl bg-white/5 flex items-center justify-center text-rose-500 shrink-0 border border-white/10"><Users className="size-6" /></div>
                            <div>
@@ -74,6 +74,22 @@ export default function EventsPage() {
                               <p className="text-sm text-neutral-500">We align our creations perfectly to your theme.</p>
                            </div>
                         </div>
+                     </div>
+
+                     {/* Event photo grid */}
+                     <div className="grid grid-cols-3 gap-3">
+                        {[
+                           "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=400&q=80&auto=format&fit=crop",
+                           "https://images.unsplash.com/photo-1555244162-803834f70033?w=400&q=80&auto=format&fit=crop",
+                           "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=400&q=80&auto=format&fit=crop",
+                           "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80&auto=format&fit=crop",
+                           "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80&auto=format&fit=crop",
+                           "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=80&auto=format&fit=crop",
+                        ].map((src, i) => (
+                           <div key={i} className={`rounded-2xl overflow-hidden border border-white/5 ${i === 0 ? "col-span-2 row-span-1 h-36" : "h-28"}`}>
+                              <img src={src} alt="Event" className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
+                           </div>
+                        ))}
                      </div>
                   </motion.div>
                </div>

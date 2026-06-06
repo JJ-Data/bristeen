@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Minus, ShoppingBag, UtensilsCrossed, ArrowRight, X, ImageIcon, ExternalLink } from "lucide-react";
+import { Plus, Minus, ShoppingBag, UtensilsCrossed, ArrowRight, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { submitFoodOrder } from "@/actions/checkout";
 
@@ -81,38 +81,32 @@ export default function MenuUI({ items }: { items: MenuItem[] }) {
          {items.map(item => {
             const inCart = cart.find(i => i.id === item.id);
             return (
-               <div key={item.id} className="bg-neutral-900 border border-white/5 hover:border-white/20 transition-colors rounded-3xl p-6 flex flex-col group relative overflow-hidden">
-                  
-                  <div className="flex justify-between items-start mb-4 relative z-10">
-                     <div className="flex items-center gap-3">
-                        <div className="size-12 rounded-xl bg-gradient-to-tr from-orange-500/20 to-rose-500/20 flex items-center justify-center text-orange-400 overflow-hidden border border-white/5">
-                           {item.imageUrl ? (
-                              <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" />
-                           ) : (
-                              <UtensilsCrossed className="size-6" />
-                           )}
+               <div key={item.id} className="bg-neutral-900 border border-white/5 hover:border-white/20 transition-colors rounded-3xl flex flex-col group relative overflow-hidden">
+
+                  {/* Food Image */}
+                  <div className="relative h-48 overflow-hidden rounded-t-3xl bg-gradient-to-tr from-orange-500/10 to-rose-500/10">
+                     {item.imageUrl ? (
+                        <img
+                           src={item.imageUrl}
+                           alt={item.name}
+                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                     ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                           <UtensilsCrossed className="size-12 text-orange-500/30" />
                         </div>
-                        {item.imageUrl && (
-                           <a 
-                              href={item.imageUrl} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="text-[10px] flex items-center gap-1.5 px-2 py-1 rounded-md bg-white/5 border border-white/10 text-neutral-400 hover:text-white hover:bg-white/10 transition-colors uppercase font-bold tracking-wider"
-                           >
-                              <ImageIcon className="size-3" />
-                              View Photo
-                           </a>
-                        )}
-                     </div>
-                     <div className="bg-black/40 backdrop-blur-md border border-white/10 px-4 py-1.5 rounded-full text-white font-bold tracking-tight shrink-0">
+                     )}
+                     <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/80 to-transparent" />
+                     <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-md border border-white/10 px-4 py-1.5 rounded-full text-white font-bold tracking-tight">
                         ₦{item.price.toLocaleString()}
                      </div>
                   </div>
 
-                  <h3 className="text-xl font-bold text-white mb-2 relative z-10">{item.name}</h3>
-                  <p className="text-sm text-neutral-400 mb-6 flex-1 relative z-10">{item.description}</p>
+                  <div className="p-6 flex flex-col flex-1">
+                  <h3 className="text-xl font-bold text-white mb-2">{item.name}</h3>
+                  <p className="text-sm text-neutral-400 mb-6 flex-1">{item.description}</p>
 
-                  <div className="border-t border-white/5 pt-5 flex items-center justify-between relative z-10">
+                  <div className="border-t border-white/5 pt-5 flex items-center justify-between">
                      {inCart ? (
                         <div className="flex items-center gap-4 bg-white/5 border border-white/10 rounded-full px-2 py-1">
                            <button onClick={() => removeFromCart(item.id)} className="p-2 hover:bg-white/10 rounded-full transition-colors text-white">
@@ -131,6 +125,7 @@ export default function MenuUI({ items }: { items: MenuItem[] }) {
                            <Plus className="size-4" /> Add to Order
                         </button>
                      )}
+                  </div>
                   </div>
                </div>
             )

@@ -19,11 +19,15 @@ type Order = {
 
 export default function OrdersClient({ orders }: { orders: Order[] }) {
   const [search, setSearch] = useState("");
+  const [filterStatus, setFilterStatus] = useState("ALL");
 
-  const filteredOrders = orders.filter(order => 
-     order.user.name.toLowerCase().includes(search.toLowerCase()) || 
-     order.id.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredOrders = orders.filter(order => {
+     const matchesSearch =
+       order.user.name.toLowerCase().includes(search.toLowerCase()) ||
+       order.id.toLowerCase().includes(search.toLowerCase());
+     const matchesStatus = filterStatus === "ALL" || order.status === filterStatus;
+     return matchesSearch && matchesStatus;
+  });
 
   const getStatusColor = (status: string) => {
      switch(status) {
@@ -38,15 +42,28 @@ export default function OrdersClient({ orders }: { orders: Order[] }) {
 
   return (
     <>
-      <div className="relative w-full max-w-md mb-4 mt-2">
-         <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-neutral-500" />
-         <input 
-            type="text"
-            placeholder="Search by client or Order ID..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-neutral-900 border border-white/10 rounded-full py-3 pl-12 pr-6 text-white placeholder-neutral-500 focus:outline-none focus:border-rose-500"
-         />
+      <div className="flex flex-col md:flex-row items-center gap-4 mb-4 mt-2">
+         <div className="relative w-full max-w-md">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-neutral-500" />
+            <input
+               type="text"
+               placeholder="Search by client or Order ID..."
+               value={search}
+               onChange={(e) => setSearch(e.target.value)}
+               className="w-full bg-neutral-900 border border-white/10 rounded-full py-3 pl-12 pr-6 text-white placeholder-neutral-500 focus:outline-none focus:border-rose-500"
+            />
+         </div>
+         <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
+            {["ALL", "PENDING", "PROCESSING", "READY", "DELIVERED", "CANCELLED"].map(status => (
+               <button
+                  key={status}
+                  onClick={() => setFilterStatus(status)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${filterStatus === status ? "bg-white text-black" : "bg-neutral-900 border border-white/10 text-neutral-400 hover:text-white hover:border-white/20"}`}
+               >
+                  {status}
+               </button>
+            ))}
+         </div>
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">

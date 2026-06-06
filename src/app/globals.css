@@ -105,3 +105,17 @@
     color: var(--color-foreground);
   }
 }
+
+/* ── Invoice PDF print styles ── */
+@media print {
+  body * { visibility: hidden; }
+  .invoice-print-area, .invoice-print-area * { visibility: visible; }
+  .invoice-print-area {
+    position: fixed;
+    inset: 0;
+    padding: 2rem;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  .no-print { display: none !important; }
+}
