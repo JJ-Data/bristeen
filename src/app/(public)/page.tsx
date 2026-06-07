@@ -2,13 +2,26 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, CalendarDays, ChefHat, Star, UtensilsCrossed, Quote, Instagram, Facebook, Twitter, MapPin, Phone, Mail } from "lucide-react";
+import {
+  ArrowRight,
+  CalendarDays,
+  ChefHat,
+  Star,
+  UtensilsCrossed,
+  Quote,
+  Instagram,
+  Facebook,
+  Twitter,
+  MapPin,
+  Phone,
+  Mail,
+} from "lucide-react";
 
 const STATS = [
-  { value: "500+", label: "Events Catered" },
-  { value: "12", label: "Years of Excellence" },
+  { value: "50+", label: "Events Catered" },
+  { value: "6", label: "Years of Excellence" },
   { value: "60+", label: "Signature Dishes" },
-  { value: "98%", label: "Client Satisfaction" },
+  { value: "95%", label: "Client Satisfaction" },
 ];
 
 const FOOD_GALLERY = [
@@ -42,19 +55,22 @@ const TESTIMONIALS = [
   {
     name: "Amaka O.",
     role: "Wedding Client",
-    quote: "Bristeen transformed our reception into a culinary masterpiece. Every guest was raving about the food all night!",
+    quote:
+      "Bristeen transformed our reception into a culinary masterpiece. Every guest was raving about the food all night!",
     avatar: "A",
   },
   {
     name: "Tunde B.",
     role: "Corporate Events",
-    quote: "Professional, punctual, and absolutely delicious. Our annual gala has never been the same since we found Bristeen.",
+    quote:
+      "Professional, punctual, and absolutely delicious. Our annual gala has never been the same since we found Bristeen.",
     avatar: "T",
   },
   {
     name: "Chisom N.",
     role: "Birthday Party",
-    quote: "The online booking made planning so easy. The catering team arrived fully prepared and exceeded every expectation.",
+    quote:
+      "The online booking made planning so easy. The catering team arrived fully prepared and exceeded every expectation.",
     avatar: "C",
   },
 ];
@@ -64,91 +80,101 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground overflow-hidden font-sans select-none selection:bg-rose-500 selection:text-white relative">
       {/* ── Hero Section ── */}
       <section className="relative pt-44 pb-28 px-6 md:px-12 flex flex-col items-center text-center overflow-hidden">
-        {/* Full-bleed background image */}
+        {/*
+          Background: the portrait event video matches a narrow phone viewport's aspect ratio
+          almost exactly, so object-cover crops it cleanly there — but on a wide desktop hero
+          it would crop down to a sliver. So: video on small screens, landscape photo on md+.
+        */}
         <div className="absolute inset-0 -z-20">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="md:hidden w-full h-full object-cover"
+          >
+            <source src="/bristeen-event.mp4" type="video/mp4" />
+          </video>
           <img
             src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80&auto=format&fit=crop"
             alt="Elegant catered event spread"
-            className="w-full h-full object-cover"
+            className="hidden md:block w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-background" />
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-rose-600/20 blur-[120px] rounded-full animate-pulse" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-orange-600/20 blur-[120px] rounded-full animate-pulse [animation-delay:2s]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/60 to-background" />
         </div>
 
         <div className="max-w-7xl mx-auto flex flex-col items-center w-full">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-rose-300 mb-8"
-        >
-          <Star className="size-4 fill-rose-500 text-rose-500" />
-          <span className="font-medium">Premium Catering Services</span>
-        </motion.div>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-          className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-[1.1]"
-        >
-          Extraordinary Taste,{" "}
-          <br className="hidden md:block" />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-orange-400">
-            Unforgettable Events.
-          </span>
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="max-w-2xl text-lg text-neutral-400 mb-10"
-        >
-          From intimate gatherings to grand celebrations, Bristeen ensures every moment is paired
-          with exquisite culinary mastery. Book your events, order gourmet food, and manage your
-          invoices seamlessly.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-          className="flex flex-col sm:flex-row items-center gap-4"
-        >
-          <Link
-            href="/events"
-            className="group flex items-center justify-center gap-2 bg-rose-600 hover:bg-rose-500 text-white px-8 py-4 rounded-full font-bold text-lg transition-all w-full sm:w-auto"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-rose-300 mb-8"
           >
-            <span>Book an Event</span>
-            <ArrowRight className="size-5 group-hover:translate-x-1 transition-transform" />
-          </Link>
-          <Link
-            href="/menu"
-            className="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white px-8 py-4 rounded-full font-bold text-lg border border-white/10 transition-colors w-full sm:w-auto"
-          >
-            <UtensilsCrossed className="size-5" />
-            Order Food
-          </Link>
-        </motion.div>
+            <Star className="size-4 fill-rose-500 text-rose-500" />
+            <span className="font-medium">Premium Catering Services</span>
+          </motion.div>
 
-        {/* Stats strip */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 w-full max-w-3xl"
-        >
-          {STATS.map((stat) => (
-            <div key={stat.label} className="flex flex-col items-center">
-              <span className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-orange-400">
-                {stat.value}
-              </span>
-              <span className="mt-1 text-xs md:text-sm text-neutral-400 text-center">{stat.label}</span>
-            </div>
-          ))}
-        </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+            className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-[1.1] text-white"
+          >
+            Extraordinary Taste, <br className="hidden md:block" />
+            Unforgettable <span className="text-rose-500">Events.</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            className="max-w-2xl text-lg text-neutral-400 mb-10"
+          >
+            From intimate gatherings to grand celebrations, Bristeen ensures
+            every moment is paired with exquisite culinary mastery. Book your
+            events, order gourmet food, and manage your invoices seamlessly.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+            className="flex flex-col sm:flex-row items-center gap-4"
+          >
+            <Link
+              href="/events"
+              className="group flex items-center justify-center gap-2 bg-rose-600 hover:bg-rose-500 text-white px-8 py-4 rounded-full font-bold text-lg transition-all w-full sm:w-auto"
+            >
+              <span>Book an Event</span>
+              <ArrowRight className="size-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <Link
+              href="/menu"
+              className="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white px-8 py-4 rounded-full font-bold text-lg border border-white/10 transition-colors w-full sm:w-auto"
+            >
+              <UtensilsCrossed className="size-5" />
+              Order Food
+            </Link>
+          </motion.div>
+
+          {/* Stats strip */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+            className="mt-20 flex items-stretch divide-x divide-white/10 w-full max-w-3xl"
+          >
+            {STATS.map((stat) => (
+              <div key={stat.label} className="flex-1 flex flex-col items-center px-2 md:px-4">
+                <span className="text-2xl md:text-4xl font-bold text-white tracking-tight">
+                  {stat.value}
+                </span>
+                <span className="mt-1.5 text-[11px] md:text-xs text-neutral-400 text-center uppercase tracking-wider">
+                  {stat.label}
+                </span>
+              </div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
@@ -171,7 +197,9 @@ export default function Home() {
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                  <span className="text-white text-sm font-bold">{img.label}</span>
+                  <span className="text-white text-sm font-bold">
+                    {img.label}
+                  </span>
                 </div>
               </div>
             ))}
@@ -184,8 +212,12 @@ export default function Home() {
         <div className="absolute inset-0 bg-primary/5 skew-y-3 origin-center scale-110 -z-10" />
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4">Everything You Need</h2>
-            <p className="text-neutral-400">A completely streamlined experience for our esteemed clients.</p>
+            <h2 className="text-3xl md:text-5xl font-bold mb-4">
+              Everything You Need
+            </h2>
+            <p className="text-neutral-400">
+              A completely streamlined experience for our esteemed clients.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
@@ -252,8 +284,12 @@ export default function Home() {
       {/* ── Testimonials ── */}
       <section className="py-24 px-6 md:px-12 max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">Loved by Our Clients</h2>
-          <p className="text-neutral-400">Real stories from the people we serve.</p>
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">
+            Loved by Our Clients
+          </h2>
+          <p className="text-neutral-400">
+            Real stories from the people we serve.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -267,7 +303,9 @@ export default function Home() {
               className="bg-neutral-900 border border-white/5 rounded-3xl p-8 flex flex-col gap-6"
             >
               <Quote className="size-8 text-rose-500/50" />
-              <p className="text-neutral-300 leading-relaxed flex-1 italic">&ldquo;{t.quote}&rdquo;</p>
+              <p className="text-neutral-300 leading-relaxed flex-1 italic">
+                &ldquo;{t.quote}&rdquo;
+              </p>
               <div className="flex items-center gap-3">
                 <div className="size-10 rounded-full bg-gradient-to-tr from-rose-500 to-orange-400 flex items-center justify-center font-bold text-white">
                   {t.avatar}
@@ -296,7 +334,8 @@ export default function Home() {
               Ready to create something memorable?
             </h2>
             <p className="text-white/80 mb-10 max-w-lg mx-auto text-lg">
-              Let Bristeen handle the food so you can focus on the moments that matter.
+              Let Bristeen handle the food so you can focus on the moments that
+              matter.
             </p>
             <Link
               href="/events"
@@ -316,8 +355,8 @@ export default function Home() {
               Bristeen <span className="text-rose-500">Catering</span>
             </div>
             <p className="text-neutral-400 text-sm max-w-sm leading-relaxed mb-6">
-              Premium catering for weddings, corporate events, and private celebrations —
-              crafted with passion, served with precision.
+              Premium catering for weddings, corporate events, and private
+              celebrations — crafted with passion, served with precision.
             </p>
             <div className="flex items-center gap-3">
               {[Instagram, Facebook, Twitter].map((Icon, i) => (
@@ -333,16 +372,35 @@ export default function Home() {
           </div>
 
           <div>
-            <h4 className="font-bold text-white mb-4 text-sm uppercase tracking-wider">Explore</h4>
+            <h4 className="font-bold text-white mb-4 text-sm uppercase tracking-wider">
+              Explore
+            </h4>
             <div className="flex flex-col gap-3 text-sm text-neutral-400">
-              <Link href="/menu" className="hover:text-white transition-colors w-fit">Menu</Link>
-              <Link href="/events" className="hover:text-white transition-colors w-fit">Events & Booking</Link>
-              <Link href="/login" className="hover:text-white transition-colors w-fit">Admin</Link>
+              <Link
+                href="/menu"
+                className="hover:text-white transition-colors w-fit"
+              >
+                Menu
+              </Link>
+              <Link
+                href="/events"
+                className="hover:text-white transition-colors w-fit"
+              >
+                Events & Booking
+              </Link>
+              <Link
+                href="/login"
+                className="hover:text-white transition-colors w-fit"
+              >
+                Admin
+              </Link>
             </div>
           </div>
 
           <div>
-            <h4 className="font-bold text-white mb-4 text-sm uppercase tracking-wider">Get in Touch</h4>
+            <h4 className="font-bold text-white mb-4 text-sm uppercase tracking-wider">
+              Get in Touch
+            </h4>
             <div className="flex flex-col gap-3 text-sm text-neutral-400">
               <div className="flex items-center gap-2.5">
                 <MapPin className="size-4 text-rose-400 shrink-0" />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CalendarDays, Users, Mail, Phone, User, Settings2, Sparkles, AlertCircle, ArrowRight } from "lucide-react";
+import { CalendarDays, Users, Mail, Phone, User, Settings2, Sparkles, AlertCircle, ArrowRight, PlayCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { submitEventBooking } from "@/actions/eventBooking";
 import Link from "next/link";
@@ -197,6 +197,46 @@ export default function EventsPage() {
                      )}
                   </motion.div>
                </div>
+            </div>
+
+            {/* ── Bold Video Showcase ── */}
+            <div className="mt-28 md:mt-36 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+               <motion.div
+                  initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+                  className="order-2 lg:order-1"
+               >
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/20 text-sm text-rose-300 mb-6">
+                     <PlayCircle className="size-4" /> Straight From the Floor
+                  </div>
+                  <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
+                     See Bristeen<br />
+                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-orange-400">In Motion.</span>
+                  </h2>
+                  <p className="text-lg text-neutral-400 max-w-md leading-relaxed mb-8">
+                     A glimpse behind the scenes at one of our recent events — our chefs, our presentation, our energy.
+                     This is what your guests can expect when Bristeen takes the floor.
+                  </p>
+                  <Link href="/menu" className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white px-7 py-4 rounded-full font-bold border border-white/10 transition-colors w-fit">
+                     Explore Our Menu <ArrowRight className="size-5" />
+                  </Link>
+               </motion.div>
+
+               <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.1 }}
+                  className="order-1 lg:order-2 relative mx-auto w-full max-w-xs sm:max-w-sm"
+               >
+                  <div className="absolute -inset-6 bg-gradient-to-tr from-rose-600/30 to-orange-500/20 blur-[80px] rounded-full -z-10" />
+                  <div className="relative aspect-[9/16] rounded-[2.5rem] overflow-hidden border-4 border-white/10 shadow-2xl bg-neutral-900">
+                     <video autoPlay muted loop playsInline className="w-full h-full object-cover">
+                        <source src="/bristeen-event.mp4" type="video/mp4" />
+                     </video>
+                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                     <div className="absolute bottom-5 left-5 right-5 flex items-center gap-2 text-white">
+                        <span className="size-2.5 rounded-full bg-rose-500 animate-pulse" />
+                        <span className="text-sm font-bold tracking-wide">Live at a Bristeen Event</span>
+                     </div>
+                  </div>
+               </motion.div>
             </div>
          </div>
       </div>
