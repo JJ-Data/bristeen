@@ -34,7 +34,7 @@ export async function generateInvoiceForBooking(bookingId: string) {
   });
 
   revalidatePath("/admin/bookings");
-  revalidatePath("/admin/invoices");
+  revalidatePath("/admin/invoicing/records");
 }
 
 export async function generateInvoiceForOrder(orderId: string) {
@@ -55,7 +55,7 @@ export async function generateInvoiceForOrder(orderId: string) {
   });
   
   revalidatePath("/admin/orders");
-  revalidatePath("/admin/invoices");
+  revalidatePath("/admin/invoicing/records");
 }
 
 export async function updateInvoiceStatus(id: string, status: string) {
@@ -63,5 +63,5 @@ export async function updateInvoiceStatus(id: string, status: string) {
     where: { id },
     data: { status }
   });
-  revalidatePath("/admin/invoices");
+  revalidatePath("/admin/invoicing/records");
 }

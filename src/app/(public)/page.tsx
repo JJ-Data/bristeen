@@ -2,7 +2,14 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, CalendarDays, ChefHat, Star, UtensilsCrossed, Quote } from "lucide-react";
+import { ArrowRight, CalendarDays, ChefHat, Star, UtensilsCrossed, Quote, Instagram, Facebook, Twitter, MapPin, Phone, Mail } from "lucide-react";
+
+const STATS = [
+  { value: "500+", label: "Events Catered" },
+  { value: "12", label: "Years of Excellence" },
+  { value: "60+", label: "Signature Dishes" },
+  { value: "98%", label: "Client Satisfaction" },
+];
 
 const FOOD_GALLERY = [
   {
@@ -55,14 +62,21 @@ const TESTIMONIALS = [
 export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-hidden font-sans select-none selection:bg-rose-500 selection:text-white relative">
-      {/* Background glows */}
-      <div className="absolute top-0 left-0 w-full h-full -z-20">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-rose-600/10 blur-[120px] rounded-full animate-pulse" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-orange-600/10 blur-[120px] rounded-full animate-pulse [animation-delay:2s]" />
-      </div>
-
       {/* ── Hero Section ── */}
-      <section className="relative pt-40 pb-20 px-6 md:px-12 max-w-7xl mx-auto flex flex-col items-center text-center">
+      <section className="relative pt-44 pb-28 px-6 md:px-12 flex flex-col items-center text-center overflow-hidden">
+        {/* Full-bleed background image */}
+        <div className="absolute inset-0 -z-20">
+          <img
+            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80&auto=format&fit=crop"
+            alt="Elegant catered event spread"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-background" />
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-rose-600/20 blur-[120px] rounded-full animate-pulse" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-orange-600/20 blur-[120px] rounded-full animate-pulse [animation-delay:2s]" />
+        </div>
+
+        <div className="max-w-7xl mx-auto flex flex-col items-center w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -118,6 +132,24 @@ export default function Home() {
             Order Food
           </Link>
         </motion.div>
+
+        {/* Stats strip */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 w-full max-w-3xl"
+        >
+          {STATS.map((stat) => (
+            <div key={stat.label} className="flex flex-col items-center">
+              <span className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-orange-400">
+                {stat.value}
+              </span>
+              <span className="mt-1 text-xs md:text-sm text-neutral-400 text-center">{stat.label}</span>
+            </div>
+          ))}
+        </motion.div>
+        </div>
       </section>
 
       {/* ── Food Gallery Strip ── */}
@@ -275,6 +307,63 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ── Footer ── */}
+      <footer className="border-t border-white/5 px-6 md:px-12 py-16">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+          <div className="md:col-span-2">
+            <div className="font-bold text-2xl tracking-tighter mb-3">
+              Bristeen <span className="text-rose-500">Catering</span>
+            </div>
+            <p className="text-neutral-400 text-sm max-w-sm leading-relaxed mb-6">
+              Premium catering for weddings, corporate events, and private celebrations —
+              crafted with passion, served with precision.
+            </p>
+            <div className="flex items-center gap-3">
+              {[Instagram, Facebook, Twitter].map((Icon, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  className="size-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-neutral-400 hover:text-white hover:bg-white/10 transition-colors"
+                >
+                  <Icon className="size-4" />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h4 className="font-bold text-white mb-4 text-sm uppercase tracking-wider">Explore</h4>
+            <div className="flex flex-col gap-3 text-sm text-neutral-400">
+              <Link href="/menu" className="hover:text-white transition-colors w-fit">Menu</Link>
+              <Link href="/events" className="hover:text-white transition-colors w-fit">Events & Booking</Link>
+              <Link href="/login" className="hover:text-white transition-colors w-fit">Admin</Link>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="font-bold text-white mb-4 text-sm uppercase tracking-wider">Get in Touch</h4>
+            <div className="flex flex-col gap-3 text-sm text-neutral-400">
+              <div className="flex items-center gap-2.5">
+                <MapPin className="size-4 text-rose-400 shrink-0" />
+                <span>Lagos, Nigeria</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <Phone className="size-4 text-rose-400 shrink-0" />
+                <span>+234 800 000 0000</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <Mail className="size-4 text-rose-400 shrink-0" />
+                <span>hello@bristeencatering.com</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/5 text-center text-xs text-neutral-500">
+          © {new Date().getFullYear()} Bristeen Catering. All rights reserved.
+        </div>
+      </footer>
     </div>
   );
 }

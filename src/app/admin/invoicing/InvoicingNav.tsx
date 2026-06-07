@@ -4,12 +4,13 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, Clock, Package, PenLine, ArrowLeft } from 'lucide-react'
+import { Home, Clock, Package, PenLine, ArrowLeft, ReceiptText } from 'lucide-react'
 import SignaturePad from '@/components/invoice/SignaturePad'
 
 const navLinks = [
   { href: '/admin/invoicing', label: 'Home', icon: Home },
-  { href: '/admin/invoicing/history', label: 'History', icon: Clock },
+  { href: '/admin/invoicing/records', label: 'Payment Records', icon: ReceiptText },
+  { href: '/admin/invoicing/history', label: 'Documents', icon: Clock },
   { href: '/admin/invoicing/items', label: 'Items', icon: Package },
 ]
 

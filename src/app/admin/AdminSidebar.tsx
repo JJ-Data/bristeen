@@ -8,7 +8,6 @@ import {
   Package,
   ChefHat,
   CalendarDays,
-  ReceiptText,
   UtensilsCrossed,
   LogOut,
   Settings,
@@ -22,8 +21,7 @@ const navItems = [
   { name: "Menu Manager", href: "/admin/menu", icon: ChefHat },
   { name: "Events & Bookings", href: "/admin/bookings", icon: CalendarDays },
   { name: "Food Orders", href: "/admin/orders", icon: UtensilsCrossed },
-  { name: "Invoices", href: "/admin/invoices", icon: ReceiptText },
-  { name: "Invoice Tool", href: "/admin/invoicing", icon: FileText },
+  { name: "Invoicing", href: "/admin/invoicing", icon: FileText },
 ];
 
 export default function AdminSidebar({ userName }: { userName: string }) {
