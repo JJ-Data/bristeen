@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { CalendarDays, Users, Mail, Phone, User, Settings2, Sparkles, AlertCircle, ArrowRight, PlayCircle } from "lucide-react";
+import { CalendarDays, Users, Mail, Phone, User, Settings2, Sparkles, AlertCircle, ArrowRight, PlayCircle, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { submitEventBooking } from "@/actions/eventBooking";
 import Link from "next/link";
 
 export default function EventsPage() {
+   const [showBookingModal, setShowBookingModal] = useState(false);
    const [isSubmitting, setIsSubmitting] = useState(false);
    const [successBookingId, setSuccessBookingId] = useState<string | null>(null);
 
@@ -36,6 +37,12 @@ export default function EventsPage() {
       }
    }
 
+   function closeModal() {
+      setShowBookingModal(false);
+      // Reset success state after the close animation finishes so the form is fresh next time
+      setTimeout(() => setSuccessBookingId(null), 300);
+   }
+
    return (
       <div className="min-h-screen bg-neutral-950 font-sans text-neutral-50 selection:bg-rose-500 selection:text-white pt-24 pb-20 relative overflow-hidden">
          {/* Background Decor */}
@@ -43,7 +50,7 @@ export default function EventsPage() {
 
          <div className="max-w-7xl mx-auto px-6 md:px-12">
             <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-center">
-               
+
                {/* Impactful Brand Side */}
                <div className="flex-1 lg:py-20 z-10">
                   <motion.div
@@ -52,14 +59,24 @@ export default function EventsPage() {
                      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-rose-300 mb-8">
                         <Sparkles className="size-4" /> Exclusive Standard
                      </div>
-                     <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6">
-                        An <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-500">Unforgettable</span><br/> Experience.
+                     <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6 text-white">
+                        An Unforgettable <span className="text-rose-500">Experience.</span>
                      </h1>
                      <p className="text-lg text-neutral-400 max-w-xl mb-10 leading-relaxed">
                         Whether it&apos;s an intimate wedding reception, a corporate gala, or an extravagant birthday, Bristeen&apos;s premium catering guarantees phenomenal service, bespoke dishes, and flawless delivery.
                      </p>
 
-                     <div className="flex flex-col gap-6 mb-10">
+                     {/* Obvious, always-visible CTA */}
+                     <button
+                        onClick={() => setShowBookingModal(true)}
+                        className="group inline-flex items-center gap-2 bg-rose-600 hover:bg-rose-500 text-white px-9 py-5 rounded-full font-bold text-lg transition-all shadow-xl shadow-rose-600/20 mb-12"
+                     >
+                        <CalendarDays className="size-5" />
+                        Book an Event
+                        <ArrowRight className="size-5 group-hover:translate-x-1 transition-transform" />
+                     </button>
+
+                     <div className="flex flex-col gap-6">
                         <div className="flex items-center gap-4">
                            <div className="size-12 rounded-2xl bg-white/5 flex items-center justify-center text-rose-500 shrink-0 border border-white/10"><Users className="size-6" /></div>
                            <div>
@@ -75,48 +92,76 @@ export default function EventsPage() {
                            </div>
                         </div>
                      </div>
-
-                     {/* Event photo grid */}
-                     <div className="grid grid-cols-3 gap-3">
-                        {[
-                           "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=400&q=80&auto=format&fit=crop",
-                           "https://images.unsplash.com/photo-1555244162-803834f70033?w=400&q=80&auto=format&fit=crop",
-                           "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=400&q=80&auto=format&fit=crop",
-                           "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80&auto=format&fit=crop",
-                           "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80&auto=format&fit=crop",
-                           "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=80&auto=format&fit=crop",
-                        ].map((src, i) => (
-                           <div key={i} className={`rounded-2xl overflow-hidden border border-white/5 ${i === 0 ? "col-span-2 row-span-1 h-36" : "h-28"}`}>
-                              <img src={src} alt="Event" className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
-                           </div>
-                        ))}
-                     </div>
                   </motion.div>
                </div>
 
-               {/* Booking Form Side */}
-               <div className="flex-1 w-full max-w-xl relative z-10">
-                  <motion.div 
-                     initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
-                     className="bg-black/40 backdrop-blur-3xl border border-white/10 rounded-[2rem] p-8 md:p-12 shadow-2xl relative overflow-hidden"
+               {/* Bold Video Showcase */}
+               <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.15 }}
+                  className="relative mx-auto w-full max-w-xs sm:max-w-sm shrink-0"
+               >
+                  <div className="absolute -inset-6 bg-gradient-to-tr from-rose-600/30 to-orange-500/20 blur-[80px] rounded-full -z-10" />
+                  <div className="relative aspect-[9/16] rounded-[2.5rem] overflow-hidden border-4 border-white/10 shadow-2xl bg-neutral-900">
+                     <video autoPlay muted loop playsInline className="w-full h-full object-cover">
+                        <source src="/bristeen-event.mp4" type="video/mp4" />
+                     </video>
+                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                     <div className="absolute top-5 left-5 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-white">
+                        <PlayCircle className="size-4 text-rose-400" />
+                        <span className="text-xs font-bold tracking-wide">Straight From the Floor</span>
+                     </div>
+                     <div className="absolute bottom-5 left-5 right-5 flex items-center gap-2 text-white">
+                        <span className="size-2.5 rounded-full bg-rose-500 animate-pulse" />
+                        <span className="text-sm font-bold tracking-wide">Live at a Bristeen Event</span>
+                     </div>
+                  </div>
+               </motion.div>
+            </div>
+         </div>
+
+         {/* ── Booking Modal ── */}
+         <AnimatePresence>
+            {showBookingModal && (
+               <motion.div
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                  className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
+               >
+                  <motion.div
+                     initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                     onClick={closeModal}
+                     className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+                  />
+
+                  <motion.div
+                     initial={{ opacity: 0, y: 30, scale: 0.97 }}
+                     animate={{ opacity: 1, y: 0, scale: 1 }}
+                     exit={{ opacity: 0, y: 20, scale: 0.97 }}
+                     transition={{ duration: 0.3, ease: "easeOut" }}
+                     className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto bg-neutral-950 border border-white/10 rounded-[2rem] p-8 md:p-12 shadow-2xl"
                   >
-                     <div className="absolute top-0 right-0 p-32 bg-rose-500/10 blur-[100px] rounded-full -z-10" />
+                     <button
+                        onClick={closeModal}
+                        className="absolute top-6 right-6 size-10 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-neutral-400 hover:text-white flex items-center justify-center transition-colors z-10"
+                        aria-label="Close"
+                     >
+                        <X className="size-5" />
+                     </button>
 
                      {successBookingId ? (
-                        <div className="py-20 text-center flex flex-col items-center">
+                        <div className="py-12 text-center flex flex-col items-center">
                            <div className="size-24 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 flex items-center justify-center mb-6">
                               <CalendarDays className="size-10" />
                            </div>
                            <h3 className="text-2xl font-bold text-white mb-3">Booking Requested!</h3>
                            <p className="text-neutral-400 mb-8 max-w-sm">Thank you for choosing Bristeen. Our team will review your application and contact you shortly.</p>
-                           
-                           <Link href="/menu" className="bg-white hover:bg-neutral-200 text-black px-8 py-4 rounded-xl font-bold transition-colors">
+
+                           <Link href="/menu" onClick={closeModal} className="bg-white hover:bg-neutral-200 text-black px-8 py-4 rounded-xl font-bold transition-colors">
                               Explore the Food Menu
                            </Link>
                         </div>
                      ) : (
                         <>
-                           <div className="mb-8 border-b border-white/10 pb-6">
+                           <div className="mb-8 border-b border-white/10 pb-6 pr-12">
                               <h3 className="text-2xl font-bold text-white mb-2">Request Event Catering</h3>
                               <p className="text-neutral-400 text-sm">Please provide details so we can best prepare for your day.</p>
                            </div>
@@ -139,7 +184,7 @@ export default function EventsPage() {
                                     </div>
                                  </div>
                               </div>
-                              
+
                               <div className="relative">
                                  <label className="text-xs font-bold text-neutral-500 uppercase tracking-wider block mb-2">Email Address</label>
                                  <div className="relative">
@@ -185,7 +230,7 @@ export default function EventsPage() {
                                  <div>All bookings are subject to review. Pricing will be discussed after reviewing your specific requirements.</div>
                               </div>
 
-                              <button 
+                              <button
                                  type="submit"
                                  disabled={isSubmitting}
                                  className="w-full bg-rose-600 hover:bg-rose-500 disabled:opacity-50 text-white font-bold py-5 rounded-xl transition-all flex items-center justify-center gap-2 mt-4 text-lg"
@@ -196,49 +241,9 @@ export default function EventsPage() {
                         </>
                      )}
                   </motion.div>
-               </div>
-            </div>
-
-            {/* ── Bold Video Showcase ── */}
-            <div className="mt-28 md:mt-36 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-               <motion.div
-                  initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-                  className="order-2 lg:order-1"
-               >
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/20 text-sm text-rose-300 mb-6">
-                     <PlayCircle className="size-4" /> Straight From the Floor
-                  </div>
-                  <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
-                     See Bristeen<br />
-                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-orange-400">In Motion.</span>
-                  </h2>
-                  <p className="text-lg text-neutral-400 max-w-md leading-relaxed mb-8">
-                     A glimpse behind the scenes at one of our recent events — our chefs, our presentation, our energy.
-                     This is what your guests can expect when Bristeen takes the floor.
-                  </p>
-                  <Link href="/menu" className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white px-7 py-4 rounded-full font-bold border border-white/10 transition-colors w-fit">
-                     Explore Our Menu <ArrowRight className="size-5" />
-                  </Link>
                </motion.div>
-
-               <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.1 }}
-                  className="order-1 lg:order-2 relative mx-auto w-full max-w-xs sm:max-w-sm"
-               >
-                  <div className="absolute -inset-6 bg-gradient-to-tr from-rose-600/30 to-orange-500/20 blur-[80px] rounded-full -z-10" />
-                  <div className="relative aspect-[9/16] rounded-[2.5rem] overflow-hidden border-4 border-white/10 shadow-2xl bg-neutral-900">
-                     <video autoPlay muted loop playsInline className="w-full h-full object-cover">
-                        <source src="/bristeen-event.mp4" type="video/mp4" />
-                     </video>
-                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
-                     <div className="absolute bottom-5 left-5 right-5 flex items-center gap-2 text-white">
-                        <span className="size-2.5 rounded-full bg-rose-500 animate-pulse" />
-                        <span className="text-sm font-bold tracking-wide">Live at a Bristeen Event</span>
-                     </div>
-                  </div>
-               </motion.div>
-            </div>
-         </div>
+            )}
+         </AnimatePresence>
       </div>
    );
 }

@@ -79,28 +79,20 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-hidden font-sans select-none selection:bg-rose-500 selection:text-white relative">
       {/* ── Hero Section ── */}
-      <section className="relative pt-44 pb-28 px-6 md:px-12 flex flex-col items-center text-center overflow-hidden">
-        {/*
-          Background: the portrait event video matches a narrow phone viewport's aspect ratio
-          almost exactly, so object-cover crops it cleanly there — but on a wide desktop hero
-          it would crop down to a sliver. So: video on small screens, landscape photo on md+.
-        */}
-        <div className="absolute inset-0 -z-20">
+      <section className="relative isolate pt-44 pb-28 px-6 md:px-12 flex flex-col items-center text-center overflow-hidden">
+        {/* Background: looping event footage, with the photo as a poster while it loads */}
+        <div className="absolute inset-0 -z-10">
           <video
             autoPlay
             muted
             loop
             playsInline
-            className="md:hidden w-full h-full object-cover"
+            poster="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80&auto=format&fit=crop"
+            className="w-full h-full object-cover"
           >
             <source src="/bristeen-event.mp4" type="video/mp4" />
           </video>
-          <img
-            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80&auto=format&fit=crop"
-            alt="Elegant catered event spread"
-            className="hidden md:block w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/60 to-background" />
+          <div className="absolute inset-0 bg-black/45" />
         </div>
 
         <div className="max-w-7xl mx-auto flex flex-col items-center w-full">
