@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CalendarDays, Users, Mail, Phone, User, Settings2, Sparkles, AlertCircle, ArrowRight, PlayCircle, X } from "lucide-react";
+import { CalendarDays, Users, Mail, Phone, User, Settings2, Sparkles, AlertCircle, ArrowRight, PlayCircle, X, MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { submitEventBooking } from "@/actions/eventBooking";
 import Link from "next/link";
@@ -67,14 +67,25 @@ export default function EventsPage() {
                      </p>
 
                      {/* Obvious, always-visible CTA */}
-                     <button
-                        onClick={() => setShowBookingModal(true)}
-                        className="group inline-flex items-center gap-2 bg-rose-600 hover:bg-rose-500 text-white px-9 py-5 rounded-full font-bold text-lg transition-all shadow-xl shadow-rose-600/20 mb-12"
-                     >
-                        <CalendarDays className="size-5" />
-                        Book an Event
-                        <ArrowRight className="size-5 group-hover:translate-x-1 transition-transform" />
-                     </button>
+                     <div className="flex flex-wrap items-center gap-4 mb-12">
+                        <button
+                           onClick={() => setShowBookingModal(true)}
+                           className="group inline-flex items-center gap-2 bg-rose-600 hover:bg-rose-500 text-white px-9 py-5 rounded-full font-bold text-lg transition-all shadow-xl shadow-rose-600/20"
+                        >
+                           <CalendarDays className="size-5" />
+                           Book an Event
+                           <ArrowRight className="size-5 group-hover:translate-x-1 transition-transform" />
+                        </button>
+                        <a
+                           href="https://wa.me/2348181120003"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           className="group inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white px-7 py-5 rounded-full font-semibold text-base transition-all"
+                        >
+                           <MessageCircle className="size-5 text-emerald-400" />
+                           Chat on WhatsApp
+                        </a>
+                     </div>
 
                      <div className="flex flex-col gap-6">
                         <div className="flex items-center gap-4">

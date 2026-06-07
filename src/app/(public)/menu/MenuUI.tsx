@@ -51,7 +51,7 @@ export default function MenuUI({ items }: { items: MenuItem[] }) {
         
         // Setup WhatsApp Forwarding
         // Using standard a wa.me link containing a generated text summary
-        const waNumber = "2348000000000"; // Placeholder admin number
+        const waNumber = "2349069973777"; // Bristeen food orders WhatsApp line
         let text = `*New Order Alert from Bristeen (#${orderId.slice(-6).toUpperCase()})*%0A%0A`;
         text += `*Client:* ${data.name}%0A`;
         text += `*Total Due:* ₦${cartTotal.toLocaleString()}%0A%0A`;

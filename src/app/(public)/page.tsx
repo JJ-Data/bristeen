@@ -92,7 +92,7 @@ export default function Home() {
           >
             <source src="/bristeen-event.mp4" type="video/mp4" />
           </video>
-          <div className="absolute inset-0 bg-black/45" />
+          <div className="absolute inset-0 bg-black/65" />
         </div>
 
         <div className="max-w-7xl mx-auto flex flex-col items-center w-full">
@@ -398,10 +398,24 @@ export default function Home() {
                 <MapPin className="size-4 text-rose-400 shrink-0" />
                 <span>Lagos, Nigeria</span>
               </div>
-              <div className="flex items-center gap-2.5">
+              <a
+                href="https://wa.me/2348181120003"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2.5 hover:text-white transition-colors w-fit"
+              >
                 <Phone className="size-4 text-rose-400 shrink-0" />
-                <span>+234 800 000 0000</span>
-              </div>
+                <span>Event Bookings — +234 818 112 0003</span>
+              </a>
+              <a
+                href="https://wa.me/2349069973777"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2.5 hover:text-white transition-colors w-fit"
+              >
+                <Phone className="size-4 text-rose-400 shrink-0" />
+                <span>Food Orders — +234 906 997 3777</span>
+              </a>
               <div className="flex items-center gap-2.5">
                 <Mail className="size-4 text-rose-400 shrink-0" />
                 <span>hello@bristeencatering.com</span>
