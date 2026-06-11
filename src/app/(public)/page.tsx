@@ -351,10 +351,16 @@ export default function Home() {
               celebrations — crafted with passion, served with precision.
             </p>
             <div className="flex items-center gap-3">
-              {[Instagram, Facebook, Twitter].map((Icon, i) => (
+              {[
+                { Icon: Instagram, href: "https://www.instagram.com/bristeen_catering/" },
+                { Icon: Facebook, href: "#" },
+                { Icon: Twitter, href: "#" },
+              ].map(({ Icon, href }, i) => (
                 <a
                   key={i}
-                  href="#"
+                  href={href}
+                  target={href !== "#" ? "_blank" : undefined}
+                  rel={href !== "#" ? "noopener noreferrer" : undefined}
                   className="size-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-neutral-400 hover:text-white hover:bg-white/10 transition-colors"
                 >
                   <Icon className="size-4" />
@@ -396,7 +402,7 @@ export default function Home() {
             <div className="flex flex-col gap-3 text-sm text-neutral-400">
               <div className="flex items-center gap-2.5">
                 <MapPin className="size-4 text-rose-400 shrink-0" />
-                <span>Lagos, Nigeria</span>
+                <span>No 2 B5 Close, Citec Estate, Mbora District, Abuja</span>
               </div>
               <a
                 href="https://wa.me/2348181120003"
